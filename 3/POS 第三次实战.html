@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="exporter-version" content="Evernote Mac 6.2 (452688)"/><meta name="keywords" content="POS实战"/><meta name="author" content="Ivan"/><meta name="created" content="2015-10-03 05:49:10 +0000"/><meta name="source" content="desktop.mac"/><meta name="updated" content="2015-10-18 12:10:43 +0000"/><title>POS 第三次实战</title></head><body>
+<div>
+<div>实战</div>
+</div>
+<ul>
+<li>实战1：编译并更新带自己名字缩写的内核（1分）</li>
+<li>实战2：完成The Linux Kernel Module Programming Guide中的hello-5.c（1分）
+<ul>
+<li><a href="http://tldp.org/LDP/lkmpg/2.6/html/index.html">http://tldp.org/LDP/lkmpg/2.6/html/index.html</a></li>
+</ul>
+</li>
+<li>实战3：总结内核的CodingStyle，并列出要点（1分）
+<ul>
+<li>Documentation/CodingStyle</li>
+</ul>
+</li>
+<li>实战4：解决hello-5.c中的所有code style问题（1分）
+<ul>
+<li>scripts/checkpatch.pl -f hello-5.c</li>
+</ul>
+</li>
+</ul>
+<div><br/></div>
+<div>
+<hr/></div>
+<div>实战一</div>
+<div>     略</div>
+<div>
+<hr/></div>
+<div>实战二</div>
+<div>     <tt>sudo insmod hello-5.ko mybyte=255 mystring=“bsnsk” myintArray=-1</tt></div>
+<div>     <tt>sudo rmmod hello-5</tt></div>
+<div>     <tt>vim /var/log/syslog</tt></div>
+<div>
+<hr/></div>
+<div>实战三 Kernel Coding Style</div>
+<div><tt>vim Documentation/CodingStyle</tt></div>
+<div><br/></div>
+<ul>
+<li>Indentation
+<ul>
+<li><b>Tab: 8 characters</b></li>
+<li><b>indentation: 8 characters</b>
+<ul>
+<li>if you need more than 3 levels of indentation, you’re screwed anyway</li>
+</ul>
+</li>
+<li><b>align “switch” and its subordinate “case” labels</b> in the same column instead of double-indenting the “case” labels.</li>
+<li><b>Don’t</b> put <b>multiple statements on a single line</b> unless you have something to hide.
+<ul>
+<li>e.g. If (condition) \n do_something_everytime;</li>
+</ul>
+</li>
+<li><b>Don’t</b> put <b>multiple assignments on a single line. </b></li>
+<li><b>Avoid tricky</b> expressions.</li>
+<li>outside of comments, documentation and except in Kconfig, <b>spaces</b> are <b>never</b> used for indentation</li>
+<li><b>Don’t</b> leave <b>whitespace</b> at the <b>end of lines</b></li>
+</ul>
+</li>
+<li>Breaking long lines and strings
+<ul>
+<li><b>length of lines: 80 columns</b></li>
+<li><b>descendants</b> are always substantially <b>shorter</b> than the parent and are placed substantially <b>to the right</b>.</li>
+<li>applies to <b>function headers with a long argument list</b></li>
+<li><b>never</b> <b>break user-visible strings</b> such as printk messages (that breaks the ability to grep for them)</li>
+</ul>
+</li>
+<li>Placing Braces and Spaces
+<ul>
+<li>put the <b>opening</b> brace <b>last on the line</b>, and put the <b>closing brace first</b></li>
+<li>the <b>same</b> applies to all <b>non-function statement blocks</b> (if, switch, for, while, do)</li>
+<li><b>functions</b> have the <b>opening brace</b> at the <b>beginning of the next line</b></li>
+<li>the closing brace is empty on <b>a line of its own</b>, <b>except</b> in cases where it is <b>followed by a continuation of the same statement</b>, i.e. a “while” in a do-statement or an “else” in an if-statement.</li>
+<li>Do <b>not</b> <b>unnecessarily use braces</b> where a single statement will do
+<ul>
+<li>This does <b>not</b> apply <b>iff</b>. <b>one branch of a conditional statement</b> is a single statement.</li>
+</ul>
+</li>
+<li>Use <b>a space after (most) keywords</b>. <b>Exceptions</b> are <b>sizeof, typeof, alignof, __attribute__</b>, which look somewhat like function (and are usually used with parentheses)</li>
+<li>Do <b>not</b> add spaces <b>around (inside) parenthesized expressions</b></li>
+<li>(using pointers) the preferred use of ‘<b>*</b>’ is <b>adjacent to the data name or function name</b> and not adjacent to the type name.</li>
+<li>Use <b>one space around</b> (on each side of) <b>most binary and ternary operators</b>, but <b>no space</b> after <b>unary</b> operators and no space before/after the postfix/prefix <b>increment &amp; decrement unary operators</b>.</li>
+<li><b>No space</b> around ‘<b>.</b>’ and ‘<b>-&gt;</b>’ structure member opereators</li>
+<li>Do not leave trailing whitespace at the ends of lines</li>
+</ul>
+</li>
+<li>Naming
+<ul>
+<li><b>GLOBAL</b> variables (to be used only if you <b>really</b> need them) have <b>descriptive</b> <b>names</b>, as do global functions.</li>
+<li>Encoding the type of a function into the name is brain damaged.
+<ul>
+<li>No wonder Microsoft makes buggy programs</li>
+</ul>
+</li>
+<li><b>LOCAL</b> variable names should be <b>short</b> and <b>to the point</b>. 
+<ul>
+<li>e.g. i, tmp</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Typedefs
+<ul>
+<li>It is a <b>mistake</b> to use typedef for <b>structures and pointers</b></li>
+<li>Use typedefs <b>only</b> for
+<ul>
+<li>totally opaque objects (to hide what the object is)</li>
+<li>clear integer types where the abstraction <b>helps</b> avoid confusion whether it is “int” or “long"</li>
+<li>when you use a sparse to literally create a <b>new</b> type for type-checking</li>
+<li>New types which are identical to standard C99 types in certain exceptional circumstances</li>
+<li>types safe for use in userspace</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Functions
+<ul>
+<li>Functions should be <b>short</b> and sweet and <b>do just one thing</b> and <b>do that well</b></li>
+<li>The <b>maximum length</b> of a function is <b>inversely proportional to the complexity and indentation level</b> of that function</li>
+<li>Use <b>helper functions</b> with <b>descriptive</b> names</li>
+<li>The <b>number of local variables</b> should <b>not exceed 5-10</b>.</li>
+<li>In <u>source file</u>, <b>separate function with one blank line</b>. If the function is <b>exported,</b> the EXPORT* <b>macro</b> for it should <b>follow immediately</b> after the closing function brace line</li>
+<li>In <u>function prototypes</u>, include <b>parameter names</b> with their data types.</li>
+</ul>
+</li>
+<li>Centralized exiting of functions
+<ul>
+<li>Choose label names which say what the goto does or why the goto exists.</li>
+</ul>
+</li>
+<li>Commenting
+<ul>
+<li>Tell <b>WHAT</b> your code does, but <b>not</b> <b>HOW</b></li>
+<li><b>Avoid</b> putting comments <b>inside a function body</b>. Put comments at the head of the function, telling people what it does and possibly why it does it.</li>
+<li>When commenting the <b>kernel API functions</b>, use the <b>kernel-doc format</b>
+<ul>
+<li>Documentation/kernel-doc-nano-HOWTO.txt</li>
+<li>scripts/kernel-doc</li>
+</ul>
+</li>
+<li>Use “/* … */“ style but not “// … “comments.</li>
+<li><span style="font: 16.0px 'Helvetica Neue'"><img src="POS%20%E7%AC%AC%E4%B8%89%E6%AC%A1%E5%AE%9E%E6%88%98.resources/2A8D607C-8A48-4B5C-80B9-9735195AEB93.png" height="352" width="658"/></span></li>
+<li><span style="font-family: 'Helvetica Neue';">Use just one data declaration per line and this leaves room for a small comment on each item, explaining its use.</span></li>
+</ul>
+</li>
+<li><span style="font-family: 'Helvetica Neue';">Kconfig configuration files</span>
+<ul>
+<li><span style="font-family: 'Helvetica Neue';"><b>Lines under a config definition</b> are indented with <b>one tab</b>, while <b>help text</b> is indented <b>an additional two spaces</b></span></li>
+<li><span style="font: 16.0px 'Helvetica Neue'"><img src="POS%20%E7%AC%AC%E4%B8%89%E6%AC%A1%E5%AE%9E%E6%88%98.resources/31706556-D6CA-40F9-A3C4-784DF4EC7C07.png" height="124" width="601"/></span></li>
+<li><span style="font-family: 'Helvetica Neue';">see Documentation/kbuild/kconfig-language.txt</span></li>
+</ul>
+</li>
+<li><span style="font-family: 'Helvetica Neue';">Data structure</span>
+<ul>
+<li><span style="font-family: 'Helvetica Neue';"><b>Data structures</b> that have <b>visibility</b> outside the single-threaded environment they are created and destroyed in should always have <b>reference counts</b>.</span></li>
+<li><font face="Helvetica Neue">Many data structures can indeed have two levels of reference counting, when there are users of different “classes".</font></li>
+</ul>
+</li>
+<li><span style="font-family: 'Helvetica Neue';">Macros, Enums and RTL</span>
+<ul>
+<li><span style="font-family: 'Helvetica Neue';">Names of <b>macros defining constants</b> and <b>labels in enums</b> are <b>capitalized</b></span></li>
+<li><span style="font-family: 'Helvetica Neue';">Enums are preferred when defining several related constants</span></li>
+<li><span style="font-family: 'Helvetica Neue';">Macros resembling functions may be named in lower case</span></li>
+<li><span style="font-family: 'Helvetica Neue';"><b>Macros with multiple statements</b> should be enclosed in a <b>do-while</b> block</span>
+<ul>
+<li><span style="font-family: 'Helvetica Neue';">while(0)</span></li>
+</ul>
+</li>
+<li><span style="font-family: 'Helvetica Neue';">when using macros, <b>avoid</b>:</span>
+<ul>
+<li><font face="Helvetica Neue">affect control flow (e.g. including “return ...")</font></li>
+<li><span style="font-family: 'Helvetica Neue';">depend on having a local variable with a magic name</span></li>
+<li><span style="font-family: 'Helvetica Neue';">macros with arguments that are used as left-values</span></li>
+<li><span style="font-family: 'Helvetica Neue';">forget about precedence</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span style="font-family: 'Helvetica Neue';">Printing kernel message</span>
+<ul>
+<li><span style="font-family: 'Helvetica Neue';">Mind the <b>spelling</b>, and make the messages concise, clear and unambiguous</span></li>
+<li><span style="font-family: 'Helvetica Neue';">Use driver model diagnostic macros in &lt;linux/device.h&gt;. Tag with right level: dev_err(), dev<i>_</i>warn(), dev_info(), etc. &lt;linux/printk.h&gt; defines pr_notice(), pr_info(), pr_warn(), pr_err(), etc</span></li>
+</ul>
+</li>
+<li><span style="font-family: 'Helvetica Neue';">Allocating memory</span>
+<ul>
+<li><span style="font-family: 'Helvetica Neue';">allocators: kmalloc(), kzalloc(), kmalloc_array9), kcalloc(), vmalloc(), vzalloc()</span></li>
+<li><font face="Helvetica Neue">e.g. p = kmalloc(sizeof(*p), …);</font></li>
+<li><font face="Helvetica Neue">e.g. p = kmalloc_array(n, sizeof(…), …);</font></li>
+</ul>
+</li>
+<li><span style="font-family: 'Helvetica Neue';">Inline</span>
+<ul>
+<li><span style="font-family: 'Helvetica Neue';"><b>not</b> put <b>inline</b> at functions that have <b>more than 3 lines</b> of code </span></li>
+</ul>
+</li>
+<li><span style="font-family: 'Helvetica Neue';">Function return values and names</span>
+<ul>
+<li><span style="font-family: 'Helvetica Neue';">two ways:</span>
+<ul>
+<li><span style="font-family: 'Helvetica Neue';">error-code integer: (-Exx = failure, 0 = success)</span></li>
+<li><font face="Helvetica Neue">“succeeded” boolean: (0 = failure, non-zero = success)</font></li>
+</ul>
+</li>
+<li><span style="font-family: 'Helvetica Neue';">If the name of a function is an <b>action or an imperative command</b></span>
+<ul>
+<li><span style="font-family: 'Helvetica Neue';">return an <b>error-code integer</b></span></li>
+</ul>
+</li>
+<li><span style="font-family: 'Helvetica Neue';">If the name is a <b>predicate</b></span>
+<ul>
+<li><font face="Helvetica Neue">return a <b>“succeeded” boolean</b></font></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span style="font-family: 'Helvetica Neue';">Do not reinvent the kernel macros</span>
+<ul>
+<li><span style="font-family: 'Helvetica Neue';">include/linux/kernel.h</span></li>
+<li><span style="font-family: 'Helvetica Neue';">e.g. ARRAY_SIZE(x), FIELD_SIZEOF(t, f)</span></li>
+</ul>
+</li>
+<li><span style="font-family: 'Helvetica Neue';">Inline assembly</span>
+<ul>
+<li><span style="font-family: 'Helvetica Neue';">can and should poke hardware from C when possible</span></li>
+<li><span style="font-family: 'Helvetica Neue';">simple helper functions that wrap common bits of inline assembly</span></li>
+<li><span style="font-family: 'Helvetica Neue';">Large, non-trivial assembly functions should go in .S files, with corresponding C prototypes defined in C header files.</span>
+<ul>
+<li><font face="Helvetica Neue">use “asmlinkage"</font></li>
+</ul>
+</li>
+<li><span style="font-family: 'Helvetica Neue';">perhaps need to mark your asm statement as volatile</span></li>
+<li><span style="font-family: 'Helvetica Neue';">Put each instruction on a separate line in a separate quoted string, and end each except the last with \n\t to properly indent the next instruction in the assembly output</span></li>
+</ul>
+</li>
+<li><span style="font-family: 'Helvetica Neue';">Conditional Compilation</span>
+<ul>
+<li><font face="Helvetica Neue">Wherever possible, don’t use preprocessor conditionals in .c files</font></li>
+<li><span style="font-family: 'Helvetica Neue';">Instead, use in a header file defining functions for use in those .c files, providing no-op stub versions in the #else case, and then call those functions unconditionally from .c files.</span></li>
+<li><span style="font-family: 'Helvetica Neue';">Prefer to compile out entire functions, rather than portions of functions or portions of expressions</span></li>
+<li><span style="font-family: 'Helvetica Neue';">￼Within code, where possible, use the IS_ENABLED macro to convert a Kconfig symbol into a C boolean expression, and use it in a normal C conditional</span></li>
+<li><span style="font-family: 'Helvetica Neue';">At the end of any non-trival #if or #ifdef block, place a comment on the same line noticing the conditional expression used.</span></li>
+</ul>
+</li>
+</ul>
+<div><span style="font-family: 'Helvetica Neue';"><br/></span></div>
+<div>
+<hr/></div>
+<div><span style="font-family: 'Helvetica Neue';">实战四</span></div>
+<div><span style="font-family: 'Helvetica Neue';">     </span><a href="POS%20%E7%AC%AC%E4%B8%89%E6%AC%A1%E5%AE%9E%E6%88%98.resources/hello-5.c">hello-5.c</a></div>
+</body></html>

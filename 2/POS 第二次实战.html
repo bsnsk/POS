@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="exporter-version" content="Evernote Mac 6.2 (452688)"/><meta name="keywords" content="POS实战"/><meta name="altitude" content="54.79253768920898"/><meta name="author" content="Ivan"/><meta name="created" content="2015-09-29 06:26:51 +0000"/><meta name="latitude" content="39.98766171509828"/><meta name="longitude" content="116.3034854630936"/><meta name="source" content="desktop.mac"/><meta name="updated" content="2015-10-18 12:10:41 +0000"/><title>POS 第二次实战</title></head><body>
+<div><span style="color: rgb(68, 68, 68); font-family: 'Lucida Grande', Arial, sans-serif; font-size: small; font-style: normal; font-variant: normal; font-weight: 300; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; float: none; background-color: rgb(255, 255, 255);">实战1：利用git方式获取linux内核（1分）</span>
+<div><span style="color: rgb(68, 68, 68); font-family: 'Lucida Grande', Arial, sans-serif; font-size: small; font-style: normal; font-variant: normal; font-weight: 300; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; float: none; background-color: rgb(255, 255, 255);">实战2：开启initcall_debug，获取trace信息（1分）</span></div>
+<div><span style="color: rgb(68, 68, 68); font-family: 'Lucida Grande', Arial, sans-serif; font-size: small; font-style: normal; font-variant: normal; font-weight: 300; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; float: none; background-color: rgb(255, 255, 255);">实战3：采用scripts/bootgraph.pl生成SVG可缩放矢量图形（1分）</span></div>
+</div>
+<div><span style="color: rgb(68, 68, 68); font-family: 'Lucida Grande', Arial, sans-serif; font-size: small; font-style: normal; font-variant: normal; font-weight: 300; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; float: none; background-color: rgb(255, 255, 255);">实战4：对占据时间较大的前10个initcall，列出其所在文件、initcall level以及功能简要说明（1分）</span></div>
+<div><br/></div>
+<hr/>
+<div>I.</div>
+<div>git clone git://kernel.ubuntu.com/ubuntu/ubuntu-&lt;release codename&gt;.git</div>
+<div>          vivid</div>
+<hr/>
+<div>II.</div>
+<div>1⃣️compilation:<a href="https://wiki.ubuntu.com/KernelTeam/GitKernelBuild">https://wiki.ubuntu.com/KernelTeam/GitKernelBuild</a><a href="https://wiki.ubuntu.com/KernelTeam/GitKernelBuild"> </a></div>
+<div>     (tried <a href="https://wiki.ubuntu.com/Kernel/BuildYourOwnKernel">https://wiki.ubuntu.com/Kernel/BuildYourOwnKernel</a></div>
+<div>           Problem: 版本号不对，应该是3.19.8，编译出来3.19.0)</div>
+<div>Note: config 直接 cp /boot/config-`uname -r` .config</div>
+<div>2⃣️GRUB press ‘e'</div>
+<div>3⃣️add “printk.time=1 initcall_debug” at the end of the line starting with “linux"</div>
+<div>4⃣️after booting the system, use</div>
+<div>
+<div style="font-family: monospace, Courier; color: black; border: 1px solid rgb(221, 221, 221); padding: 1em; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(249, 249, 249);">
+<div>dmesg -s 128000 | grep "initcall" | sed "s/\(.*\)after\(.*\)/\2 \1/g" | sort -n</div>
+</div>
+</div>
+<div><a href="POS%20%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%AE%9E%E6%88%98.resources/trace.log">trace.log</a></div>
+<div><br/></div>
+<hr/>
+<div>III. </div>
+<div>scripts/bootgraph.pl</div>
+<div>SVG: </div>
+<div><img src="POS%20%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%AE%9E%E6%88%98.resources/output.svg" height="0" width="0"/></div>
+<div><br/></div>
+<hr/>
+<div>IV. </div>
+<div> 13669 usecs [ 2441.188688] initcall crct10dif_intel_mod_init+0x0/0x1000 [crct10dif_pclmul] returned 0</div>
+<div> 13751 usecs [ 2441.189194] initcall ppdev_init+0x0/0x1000 [ppdev] returned 0</div>
+<div> 29268 usecs [ 2441.061286] initcall vboxguestLinuxModInit+0x0/0x1000 [vboxguest] returned 0</div>
+<div> 35156 usecs [ 2437.933709] initcall acpi_init+0x0/0x267 returned 0</div>
+<div> 46676 usecs [ 2438.002357] initcall populate_rootfs+0x0/0x106 returned 0</div>
+<div> 47293 usecs [ 2441.137840] initcall aesni_init+0x0/0xfb [aesni_intel] returned 0</div>
+<div> 61263 usecs [ 2438.086796] initcall ohci_pci_init+0x0/0x69 returned 0</div>
+<div> 287209 usecs [ 2441.362229] initcall intel8x0_driver_init+0x0/0x1000 [snd_intel8x0] returned 0</div>
+<div> 353467 usecs [ 2438.587276] initcall ahci_pci_driver_init+0x0/0x1000 [ahci] returned 0</div>
+<div> 358905 usecs [ 2438.584045] initcall e1000_init_module+0x0/0x1000 [e1000] returned 0</div>
+<div><br/></div>
+<div>说明</div>
+<ul>
+<li> 13669 usecs [ 2441.188688] initcall crct10dif_intel_mod_init+0x0/0x1000 [crct10dif_pclmul] returned 0
+<ul>
+<li>defined in
+<ul>
+<li>arch/x86/crypto/crct10dif-pclmul_glue.c, line 130 </li>
+</ul>
+</li>
+<li>level 3</li>
+</ul>
+</li>
+<li> 13751 usecs [ 2441.189194] initcall ppdev_init+0x0/0x1000 [ppdev] returned 0
+<ul>
+<li>defined in 
+<ul>
+<li>drivers/char/ppdev.c, line 768</li>
+</ul>
+</li>
+<li>level 6</li>
+<li>user-level device driver加载</li>
+</ul>
+</li>
+<li> 29268 usecs [ 2441.061286] initcall vboxguestLinuxModInit+0x0/0x1000 [vboxguest] returned 0
+<ul>
+<li>defined as a function prototype in
+<ul>
+<li>ubuntu/vbox/vboxguest/VBoxGuest-linux.c </li>
+</ul>
+</li>
+<li>level 7</li>
+<li>VirtualBox Guest 相关部件</li>
+</ul>
+</li>
+<li> 35156 usecs [ 2437.933709] initcall acpi_init+0x0/0x267 returned 0
+<ul>
+<li>defined in
+<ul>
+<li>drivers/acpi/bus.c, line 646</li>
+<li>drivers/gpu/drm/nouveau/core/subdev/bios/shadowacpi.c, line 90 </li>
+</ul>
+</li>
+<li>level 2</li>
+<li>Advanced Configuration and Power Interface, 电源管理</li>
+</ul>
+</li>
+<li> 46676 usecs [ 2438.002357] initcall populate_rootfs+0x0/0x106 returned 0
+<ul>
+<li>defined in
+<ul>
+<li>init/initramfs.c, line 608 </li>
+</ul>
+</li>
+<li>level 5</li>
+<li>rootfs相关</li>
+</ul>
+</li>
+<li> 47293 usecs [ 2441.137840] initcall aesni_init+0x0/0xfb [aesni_intel] returned 0
+<ul>
+<li>defined in
+<ul>
+<li>arch/x86/crypto/aesni-intel_glue.c, line 1494 </li>
+</ul>
+</li>
+<li>level 3</li>
+<li>the Intel Advanced Encryption Standard New Instructions; AES-NI，为微处理器设计的x86指令架构</li>
+</ul>
+</li>
+<li> 61263 usecs [ 2438.086796] initcall ohci_pci_init+0x0/0x69 returned 0
+<ul>
+<li> defined in
+<ul>
+<li>drivers/usb/host/ohci-pci.c line288</li>
+</ul>
+</li>
+<li>level 6</li>
+<li>Host Controller Interface &amp; PCI 的驱动加载</li>
+</ul>
+</li>
+<li> 287209 usecs [ 2441.362229] initcall intel8x0_driver_init+0x0/0x1000 [snd_intel8x0] returned 0
+<ul>
+<li>level 2 </li>
+</ul>
+</li>
+<li> 353467 usecs [ 2438.587276] initcall ahci_pci_driver_init+0x0/0x1000 [ahci] returned 0
+<ul>
+<li>level 2 </li>
+<li>AHCI: Advanced Host Controller Interface. SATA进阶以及PCI相关的驱动加载</li>
+</ul>
+</li>
+<li> 358905 usecs [ 2438.584045] initcall e1000_init_module+0x0/0x1000 [e1000] returned 0
+<ul>
+<li>defined in
+<ul>
+<li>(as a function prototype) drivers/net/ethernet/intel/e1000/e1000_main.c, line 111</li>
+<li>drivers/net/ethernet/intel/e1000e/netdev.c, line 7246</li>
+<li>drivers/net/ethernet/intel/e1000/e1000_main.c, line 244</li>
+</ul>
+</li>
+<li>level </li>
+<li>init_module() loads an ELF image into kernel space, performs any necessary symbol relocations, initializes module parameters to values provided by the caller, and then runs the module's init function. This system call requires privilege.</li>
+</ul>
+</li>
+</ul>
+</body></html>

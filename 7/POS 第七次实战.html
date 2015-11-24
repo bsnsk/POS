@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="exporter-version" content="Evernote Mac 6.2 (452688)"/><meta name="keywords" content="POS实战"/><meta name="author" content="Ivan"/><meta name="created" content="2015-11-11 08:23:25 +0000"/><meta name="source" content="desktop.mac"/><meta name="updated" content="2015-11-18 07:28:06 +0000"/><meta name="application-data:starred" content="1"/><title>POS 第七次实战</title></head><body>
+<div><span style="color: rgb(68, 68, 68); font-family: 'Lucida Grande', Arial, sans-serif; font-size: small; font-style: normal; font-variant: normal; font-weight: 300; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); float: none;">实战1：dump所有icache的内容和dcache的内容（2分）</span>
+<div><span style="color: rgb(68, 68, 68); font-family: 'Lucida Grande', Arial, sans-serif; font-size: small; font-style: normal; font-variant: normal; font-weight: 300; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); float: none;">实战2：Detecting kernel memory leaks: </span><a href="http://lwn.net/Articles/187979/" style="padding: 0px; border: 0px; outline: 0px; font-weight: 300; font-style: normal; font-family: 'Lucida Grande', Arial, sans-serif; font-size: small; color: rgb(18, 143, 168); text-decoration: none; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">http://lwn.net/Articles/187979/</a><span style="color: rgb(68, 68, 68); font-family: 'Lucida Grande', Arial, sans-serif; font-size: small; font-style: normal; font-variant: normal; font-weight: 300; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); float: none;">（1分）</span></div>
+</div>
+<div><span style="color: rgb(68, 68, 68); font-family: 'Lucida Grande', Arial, sans-serif; font-size: small; font-style: normal; font-variant: normal; font-weight: 300; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); float: none;">实战3：采用pagewalk dump一个用户进程的全部页表信息（1分）</span></div>
+<div>
+<hr/></div>
+<div><font color="#444444" face="Lucida Grande, Arial, sans-serif">实战1</font></div>
+<div><span style="font-family: 'Lucida Grande', Arial, sans-serif;"><span style="color: rgb(68, 68, 68);">MSR</span></span></div>
+<div><font color="#444444" face="Lucida Grande, Arial, sans-serif">— 污染cache？</font></div>
+<div><span style="font-family: 'Lucida Grande', Arial, sans-serif;"><span style="color: rgb(68, 68, 68);">用emulator (ICE)</span></span></div>
+<div><span style="font-family: 'Lucida Grande', Arial, sans-serif;"><span style="color: rgb(68, 68, 68);">JTAG</span></span></div>
+<div><span style="font-family: 'Lucida Grande', Arial, sans-serif;"><span style="color: rgb(68, 68, 68);"><br/></span></span></div>
+<div>
+<hr/></div>
+<div><font color="#444444" face="Lucida Grande, Arial, sans-serif">实战2</font></div>
+<div><span style="color: rgb(68, 68, 68);"><span style="font-family: 'Lucida Grande';">modify <i>.config</i> and recompile kernel</span></span></div>
+<div>
+<div style="-webkit-print-color-adjust: exact; background-color: rgb(248, 248, 248); border: 1px solid rgb(204, 204, 204); font-size: 13px; overflow: auto; padding: 6px 10px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><code style="-webkit-print-color-adjust: exact; padding: 0px; border: none; background-color: transparent; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; background-position: initial initial; background-repeat: initial initial;">CONFIG_HAVE_DEBUG_KMEMLEAK=y<br/>
+CONFIG_DEBUG_KMEMLEAK=y<br/>
+CONFIG_DEBUG_KMEMLEAK_EARLY_LOG_SIZE=5000<br/>
+CONFIG_DEBUG_KMEMLEAK_TEST=m</code></div>
+</div>
+<div><span style="font-family: 'Lucida Grande', Arial, sans-serif;"><span style="color: rgb(68, 68, 68);"><br/></span></span></div>
+<div><span style="font-family: 'Lucida Grande', Arial, sans-serif;"><span style="color: rgb(68, 68, 68);"><br/></span></span></div>
+<div>
+<div style="-webkit-print-color-adjust: exact; background-color: rgb(248, 248, 248); border: 1px solid rgb(204, 204, 204); font-size: 13px; overflow: auto; padding: 6px 10px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><code style="-webkit-print-color-adjust: exact; padding: 0px; border: none; background-color: transparent; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; background-position: initial initial; background-repeat: initial initial;">Last login: Wed Nov 18 11:04:07 2015 from 10.0.2.2<br/>
+ivan@Ihost:~$ sudo su<br/>
+[sudo] password for ivan: <br/>
+root@Ihost:/home/ivan# cd /sys/kernel/debug<br/>
+root@Ihost:/sys/kernel/debug# ls<br/>
+acpi  cleancache  dma_buf  dynamic_debug  fault_around_bytes  gpio  kmemleak  kvm-guest  pinctrl  ras     regulator       sleep_time     tracing  virtio-ports    x86<br/>
+bdi   clk         dri      extfrag        frontswap           hid   kprobes   mce        pwm      regmap  sched_features  suspend_stats  usb      wakeup_sources<br/>
+root@Ihost:/sys/kernel/debug# cat kmemleak<br/>
+unreferenced object 0xffffc900001ed000 (size 4096):<br/>
+  comm "insmod", pid 1583, jiffies 4294912392 (age 101.340s)<br/>
+  hex dump (first 32 bytes):<br/>
+    50 f8 e4 35 00 88 ff ff 00 00 00 00 00 00 00 00  P..5............<br/>
+    70 f2 e4 35 00 88 ff ff 00 02 20 00 00 00 ad de  p..5...... .....<br/>
+  backtrace:<br/>
+    [&lt;ffffffff817770ae&gt;] kmemleak_alloc+0x4e/0xb0<br/>
+    [&lt;ffffffff811b06b2&gt;] __vmalloc_node_range+0x1b2/0x2c0<br/>
+    [&lt;ffffffff811b0a2b&gt;] vmalloc+0x4b/0x50<br/>
+    [&lt;ffffffffc035b013&gt;] init_module+0x13/0x30 [leak]<br/>
+    [&lt;ffffffff81002144&gt;] do_one_initcall+0xd4/0x210<br/>
+    [&lt;ffffffff810f55f4&gt;] load_module+0x2124/0x2a60<br/>
+    [&lt;ffffffff810f60a6&gt;] SyS_finit_module+0x86/0xb0<br/>
+    [&lt;ffffffff81789b4d&gt;] system_call_fastpath+0x16/0x1b<br/>
+    [&lt;ffffffffffffffff&gt;] 0xffffffffffffffff<br/>
+root@Ihost:/sys/kernel/debug# echo scan &gt; kmemleak<br/>
+root@Ihost:/sys/kernel/debug# cat kmemleak<br/>
+unreferenced object 0xffffc900001ed000 (size 4096):<br/>
+  comm "insmod", pid 1583, jiffies 4294912392 (age 112.028s)<br/>
+  hex dump (first 32 bytes):<br/>
+    50 f8 e4 35 00 88 ff ff 00 00 00 00 00 00 00 00  P..5............<br/>
+    70 f2 e4 35 00 88 ff ff 00 02 20 00 00 00 ad de  p..5...... .....<br/>
+  backtrace:<br/>
+    [&lt;ffffffff817770ae&gt;] kmemleak_alloc+0x4e/0xb0<br/>
+    [&lt;ffffffff811b06b2&gt;] __vmalloc_node_range+0x1b2/0x2c0<br/>
+    [&lt;ffffffff811b0a2b&gt;] vmalloc+0x4b/0x50<br/>
+    [&lt;ffffffffc035b013&gt;] init_module+0x13/0x30 [leak]<br/>
+    [&lt;ffffffff81002144&gt;] do_one_initcall+0xd4/0x210<br/>
+    [&lt;ffffffff810f55f4&gt;] load_module+0x2124/0x2a60<br/>
+    [&lt;ffffffff810f60a6&gt;] SyS_finit_module+0x86/0xb0<br/>
+    [&lt;ffffffff81789b4d&gt;] system_call_fastpath+0x16/0x1b<br/>
+    [&lt;ffffffffffffffff&gt;] 0xffffffffffffffff<br/>
+root@Ihost:/sys/kernel/debug# </code></div>
+</div>
+<div><span style="font-family: 'Lucida Grande', Arial, sans-serif;"><span style="color: rgb(68, 68, 68);"><br/></span></span></div>
+<div>
+<hr/></div>
+<div><font color="#444444" face="Lucida Grande, Arial, sans-serif">实战3</font></div>
+<div><span style="color: rgb(68, 68, 68);"><span style="font-family: 'Lucida Grande';">调用之前</span></span></div>
+<div>
+<div style="-webkit-print-color-adjust: exact; background-color: rgb(248, 248, 248); border: 1px solid rgb(204, 204, 204); font-size: 13px; overflow: auto; padding: 6px 10px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div><code style="-webkit-print-color-adjust: exact; padding: 0px; border: none; background-color: transparent; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; background-position: initial initial; background-repeat: initial initial;">grep walk_page_range /boot/*</code></div>
+</div>
+</div>
+<div><span style="color: rgb(68, 68, 68);"><span style="font-family: 'Lucida Grande';">找到函数地址，并确定要查看的进程。</span></span></div>
+<div><span style="font-family: 'Lucida Grande';"><span style="color: rgb(68, 68, 68);"><br/></span></span></div>
+<div><span style="font-family: 'Lucida Grande';"><span style="color: rgb(68, 68, 68);">附模块代码</span></span></div>
+<div>
+<div style="-webkit-print-color-adjust: exact; background-color: rgb(248, 248, 248); border: 1px solid rgb(204, 204, 204); font-size: 13px; overflow: auto; padding: 6px 10px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><code style="-webkit-print-color-adjust: exact; padding: 0px; border: none; background-color: transparent; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; background-position: initial initial; background-repeat: initial initial;">/*<br/>
+ *  pgtable.c<br/>
+ *<br/>
+ *  print a user's page table information<br/>
+ *<br/>
+ */<br/>
+<br/>
+/*<br/>
+ * Copyright (C) 2015 by Shuyang Shi<br/>
+ */<br/>
+<br/>
+/*<br/>
+ * The necessary header files<br/>
+ */<br/>
+#include &lt;linux/kernel.h&gt;<br/>
+#include &lt;linux/module.h&gt;<br/>
+#include &lt;linux/moduleparam.h&gt;<br/>
+#include &lt;linux/unistd.h&gt;<br/>
+#include &lt;linux/syscalls.h&gt;<br/>
+#include &lt;linux/delay.h&gt;<br/>
+#include &lt;linux/mm.h&gt;<br/>
+#include &lt;asm/cacheflush.h&gt;<br/>
+/*<br/>
+ * For the current (process) structure, we need<br/>
+ * this to know who the current user is.<br/>
+ */<br/>
+#include &lt;linux/sched.h&gt;<br/>
+#include &lt;linux/uaccess.h&gt;<br/>
+<br/>
+int print_pgd(pgd_t *pgd, unsigned long addr,<br/>
+        unsigned long next, struct mm_walk *walk)<br/>
+{<br/>
+    printk(KERN_DEBUG "pgd_entry %lx @ %lx\n", *(unsigned long *)(pgd), addr);<br/>
+    return 0;<br/>
+}<br/>
+<br/>
+int print_pud(pud_t *pud, unsigned long addr,<br/>
+        unsigned long next, struct mm_walk *walk)<br/>
+{<br/>
+    printk(KERN_DEBUG "pud_entry %lx @ %lx\n", *(unsigned long *)(pud), addr);<br/>
+    return 0;<br/>
+}<br/>
+<br/>
+int print_pmd(pmd_t *pmd, unsigned long addr,<br/>
+        unsigned long next, struct mm_walk *walk)<br/>
+{<br/>
+    printk(KERN_DEBUG "pmd_entry %lx @ %lx\n", *(unsigned long *)(pmd), addr);<br/>
+    return 0;<br/>
+}<br/>
+<br/>
+int print_pte(pte_t *pte, unsigned long addr,<br/>
+        unsigned long next, struct mm_walk *walk)<br/>
+{<br/>
+    printk(KERN_DEBUG "pte_entry %lx @ %lx\n", *(unsigned long *)(pte), addr);<br/>
+    return 0;<br/>
+}<br/>
+<br/>
+int (*my_walk_page_range)(unsigned long addr, unsigned long end,<br/>
+        struct mm_walk *walk) = (void *)0xffffffff811b0f10;<br/>
+<br/>
+static int pid = 1254;<br/>
+module_param(pid, int, 0644);<br/>
+<br/>
+static struct mm_walk _walk;<br/>
+static struct mm_walk *walk = &amp;_walk;<br/>
+<br/>
+/*<br/>
+ * Initialize the module<br/>
+ */<br/>
+int init_module(void)<br/>
+{<br/>
+    struct task_struct *task = pid_task(find_vpid(pid), PIDTYPE_PID);<br/>
+    walk-&gt;pgd_entry = print_pgd;<br/>
+    walk-&gt;pud_entry = print_pud;<br/>
+    walk-&gt;pmd_entry = print_pmd;<br/>
+    walk-&gt;pte_entry = print_pte;<br/>
+    walk-&gt;mm = task-&gt;mm;<br/>
+    my_walk_page_range(0, 0x7fffffffffff, walk);<br/>
+    return 0;<br/>
+}<br/>
+<br/>
+/*<br/>
+ * Cleanup<br/>
+ */<br/>
+void cleanup_module(void)<br/>
+{<br/>
+<br/>
+}<br/>
+<br/>
+/*<br/>
+ * Get rid of taint message by declaring code as GPL.<br/>
+ */<br/>
+MODULE_LICENSE("GPL");</code></div>
+</div>
+</body></html>

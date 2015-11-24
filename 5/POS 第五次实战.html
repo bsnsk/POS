@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="exporter-version" content="Evernote Mac 6.2 (452688)"/><meta name="keywords" content="POS实战"/><meta name="altitude" content="48.57410430908203"/><meta name="author" content="Ivan"/><meta name="created" content="2015-10-31 07:00:55 +0000"/><meta name="latitude" content="39.98863161679279"/><meta name="longitude" content="116.3017310379565"/><meta name="source" content="desktop.mac"/><meta name="updated" content="2015-11-04 05:48:05 +0000"/><title>POS 第五次实战</title></head><body>
+<div>
+<div><span style="color: rgb(68, 68, 68); font-family: 'Lucida Grande', Arial, sans-serif; font-size: small; font-style: normal; font-variant: normal; font-weight: 300; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); float: none;">实战1：用print_hex_dump打印boot_command_line和saved_command_line的地址空间内容（1分）</span>
+<div><span style="color: rgb(68, 68, 68); font-family: 'Lucida Grande', Arial, sans-serif; font-size: small; font-style: normal; font-variant: normal; font-weight: 300; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); float: none;">实战2：开启Magic SysRQ，测试各种按键组合（1分）</span></div>
+<div><span style="color: rgb(68, 68, 68); font-family: 'Lucida Grande', Arial, sans-serif; font-size: small; font-style: normal; font-variant: normal; font-weight: 300; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); float: none;">实战3：学习内核dump_stack使用，使用dump_stack打印上堂课实战1的call stack（1分）</span></div>
+</div>
+<div><span style="color: rgb(68, 68, 68); font-family: 'Lucida Grande', Arial, sans-serif; font-size: small; font-style: normal; font-variant: normal; font-weight: 300; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); float: none;">实战4：Following "Debugging the kernel using Ftrace"（1分）</span></div>
+</div>
+<div><br/></div>
+<div>
+<hr/></div>
+<div>实战1</div>
+<div>in init/main.c</div>
+<div>EXPORT_SYMBOL(boot_command_line);</div>
+<div>EXPORT_SYMBOL(saved_command_line);</div>
+<div><br/></div>
+<div>recompile and reinstall kernel</div>
+<div><br/></div>
+<div><a href="POS%20%E7%AC%AC%E4%BA%94%E6%AC%A1%E5%AE%9E%E6%88%98.resources/command_lines.txt">command_lines.txt</a></div>
+<div><br/></div>
+<div>
+<hr/></div>
+<div>实战2</div>
+<div>echo 1 &gt; /proc/sys/kernel/sysrq</div>
+<div>send CTRL + ALT + SysRq + s</div>
+<div><br/></div>
+<div><span style="font: 16.0px 'Helvetica Neue'"><img src="POS%20%E7%AC%AC%E4%BA%94%E6%AC%A1%E5%AE%9E%E6%88%98.resources/EC75D829-9B11-4D60-BB2E-CB92FB5AB14C.png" height="101" width="881"/><img src="POS%20%E7%AC%AC%E4%BA%94%E6%AC%A1%E5%AE%9E%E6%88%98.resources/48D297DE-8E6D-4A64-82D9-976E18B82927.png" height="101" width="626"/></span></div>
+<div><br/></div>
+<div>ref: <a href="https://www.virtualbox.org/ticket/11975">https://www.virtualbox.org/ticket/11975</a></div>
+<div>
+<hr/></div>
+<div>实战3</div>
+<div><a href="POS%20%E7%AC%AC%E4%BA%94%E6%AC%A1%E5%AE%9E%E6%88%98.resources/syscall_callstack.txt">syscall_callstack.txt</a></div>
+<div>
+<hr/></div>
+<div>实战4</div>
+<div>略</div>
+</body></html>
