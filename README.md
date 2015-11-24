@@ -1,6 +1,11 @@
-# POS
-Practice Record of POS (Practice of Operating System)
+# POS Practice
 
+Shuyang Shi, 2015
+***
+### Brief
+Practice Record of POS (Practice of Operating System). This course is about Linux operating system, and the concepts and practice of OS.
+
+### Table of Contents
 - Week 1: Install
 - [Week 2: Boot](2/POS\ 第二次实战.html)
 - [Week 3: Kernel Modules](3/POS\ 第三次实战.html)
@@ -9,4 +14,3 @@ Practice Record of POS (Practice of Operating System)
 - [Week 6: Core](6/POS\ 第六次实战.html)
 - [Week 7: Memory](7/POS\ 第七次实战.html)
 - [Week 8: Process and Thread](POS第8次实战.md)
-By Shuyang Shi, 2015.
