@@ -32,7 +32,7 @@ kobject_del(__this_module.holders_dir->parent);
 从task列表中直接删除
 
 ```c
-list_del(&ptr->tasks);
+list_del(&task->tasks);
 ```
 
 rootkit模块输出kthread检验。
