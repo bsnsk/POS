@@ -14,3 +14,4 @@ Practice Record of POS (Practice of Operating System). This course is about Linu
 - [Week 6: Core](6/POS\ 第六次实战.html)
 - [Week 7: Memory](7/POS\ 第七次实战.html)
 - [Week 8: Process and Thread](POS第8次实战.md)
+- [Week 9: Benchmark](POS第9次实战.md)
