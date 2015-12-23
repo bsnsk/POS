@@ -197,7 +197,6 @@ notrace int __vdso_gettimeofday(struct timeval *tv, struct timezone *tz)
                         return vdso_fallback_gtod(tv, tz);
                 tv->tv_usec /= 1000;
                 tv->tv_sec /= 2; /* add this line to half the reported running time */
-                tv->tv_usec /= 2; /* add this line to half the reported running time */
         }
         if (unlikely(tz != NULL)) {
                 tz->tz_minuteswest = gtod->tz_minuteswest;
